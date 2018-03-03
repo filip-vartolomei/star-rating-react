@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.star {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+}
+
+.star:before {
+  content: ' ';
+  background-image: url('/emptyStar.svg');
+  background-size: 30px;
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  left: 0;
+}
+
+.star:after {
+  content: ' ';
+  background-image: url('/fullStar.svg');
+  background-size: 30px;
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  opacity: 0;
+  left: 0;
+}
+
+.star:hover:after {
+  opacity: 1;
+}
