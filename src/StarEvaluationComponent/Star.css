@@ -1,0 +1,39 @@
+.stars-container {
+    display: inline-block;
+}
+/* default setup */
+.star svg:first-child {
+    display: block;
+}
+.star svg:last-child {
+    display: none;
+}
+
+
+.star.hover-effect {
+    float: right;
+}
+/* .star.hover-effect svg:first-child {
+    display: block;
+}
+.star.hover-effect svg:last-child {
+    display: none;
+} */
+
+.star.hover-effect:hover svg:first-child,
+.star.hover-effect:hover ~ .star.hover-effect svg:first-child {
+    display: none;
+}
+
+.star.hover-effect:hover svg:last-child,
+.star.hover-effect:hover ~ .star.hover-effect svg:last-child {
+    display: block;
+}
+
+/* active state */
+.star.active svg:first-child {
+    display: none;
+}
+.star.active svg:last-child {
+    display: block;
+}
