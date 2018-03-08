@@ -2,139 +2,79 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Star from './Star';
 
-/**
- * ---TODO---
- * OK -- Create Defaults
- * Take arguments from props and apply the corect defaults
- * Cicle elements for the number we have
- */
-
 class StarEvaluation extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             stars: {},
             current: null
         }
     }
+
     componentWillMount() {
-        console.log(this.props);
-        const obj = {};
-        const propsElaborated = this._elaborateProps(this.props);
+        const stars = {};
 
         for (let i = 0; i < this.props.numStars; i++) {
-            obj[`star-${i}`] = propsElaborated;
+            stars[`star-${i}`] = {
+                isActive: false
+            }
         }
-
-        this.setState({
-            // "stars": new Array(this.props.numStars).fill(this.props)
-            "stars": obj,
-            starsIds: Object.keys(obj),
-            current: null
-        });
+        this.setState({stars});
     }
 
-    _elaborateProps = (props) => {
-        const newProps = {...props};
-        const obj = Object.keys(props).map((key) => {
-            switch (key) {
-                case 'enableHoverFilledEffect':
-                    if (newProps[key] === true) {
-                        newProps.backgroundColorEmptyInitial = newProps.backgroundColorEmpty;
-                    }
-                    break;
-            
-                default:
-                    break;
-            }
-        });
-        console.log(obj);
-        return newProps;
-    };
-    
-
-    handleMouseOver = (key, newObj) => {
-
-        // const fishes = {...this.state.fishes};
-        // fishes[key] = updatedFish;
-        // this.setState({fishes});
-
+    onMouseDown = (selectedKey) => {
+        console.log(selectedKey);
         const stars = {...this.state.stars};
-        stars[key] = newObj;
-        this.setState({stars});
-    }
 
-    handleMouseDown = (key) => {
-        this.setState({
-            current: key
+        let reached = false;
+        Object.keys(stars).map((key) => {
+            stars[key].isActive = !reached ? true : false;
+
+            if (key === selectedKey) {
+                reached = true;
+            }
+            return null;
         });
-        console.log(this.state.current)
-        this.setOtherStarsActive(key);
-    }
 
-    setOtherStarsActive = (currentKey) => {
-        let stars = {...this.state.stars};
-        let foundKey = false;
-        for (let i = 0; i < this.state.starsIds.length; i++) {
-            const keyStars = this.state.starsIds[i];
-            stars[keyStars].active = true;
-            if (this.state.starsIds[i] === currentKey) {
-                foundKey = true;
-            }
-            if (foundKey) {
-                stars[keyStars]['active'] = false;
-            }
-        }
-        console.log('Set new states: ', stars);
-        this.setState({stars});
-    }
-
-    renderStars = () => {
-        let aa = [];
-        for (let i = this.state.starsIds.length - 1; i >= 0; i--) {
-            const key = this.state.starsIds[i];
-            console.log(key)
-        
-            {/* return ( */}
-                aa.push(<Star key={key}
-                    index={key}
-                    star={this.state.stars[key]}
-                    handleMouseOver={this.handleMouseOver}
-                    handleMouseDown={this.handleMouseDown}
-                />);
-            {/* ); */}
-        }
-        return aa;
+        this.setState({
+            current: selectedKey,
+            stars
+        });
     }
 
     render() {
+        const stars = this.state.stars;
+        const starProperty = this.props;
+
         return (
             <div className="stars-container">
-                {
-                    this.renderStars()
-                    
-                }
+                {Object.keys(stars)
+                       .map((key) => {
+                        return (
+                            <Star key={key}
+                                id={key}
+                                star={starProperty}
+                                isActive={stars[key].isActive}
+                                onMouseDown={this.onMouseDown}
+                            />
+                        );
+                    })}
             </div>
         );
     }
 }
 
 StarEvaluation.defaultProps = {
-    active: false,
-
     numStars: 5,
-    
+
     width: 22,
     // height: 250,
 
-    backgroundColorEmpty: 'none',
+    backgroundColorEmpty: '#CCC',
     backgroundColorFilled: '#F8D64E',
-    
-    enableBorders: true, // if false, then 'backgroundColorEmpty' is mandatory, if not set then default to 'gray'
-    borderColorEmpty: '#000',
-    borderColorFilled: '#000',
 
-    enableHoverFilledEffect: true, // if false, will disable on hover fill effect on the stars
+    borderColorEmpty: 'none',
+    borderColorFilled: 'none',
 
     enableTitles: false,
     titlesType: "number", // if type 'text', user must provide text
@@ -151,12 +91,9 @@ StarEvaluation.propTypes = {
 
     backgroundColorEmpty: PropTypes.string,
     backgroundColorFilled: PropTypes.string,
-    
-    enableBorders: PropTypes.bool,
+
     borderColorEmpty: PropTypes.string,
     borderColorFilled: PropTypes.string,
-
-    enableHoverFilledEffect: PropTypes.bool,
 
     enableTitles: PropTypes.bool,
     titlesType: PropTypes.string,
