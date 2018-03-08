@@ -7,44 +7,65 @@ class StarEvaluation extends React.Component {
         super(props);
         this.state = {
             stars: {},
-            current: null
+            selectedStar: null
         }
     }
-
+    
     componentWillMount() {
-        const stars = {};
-
-        for (let i = 0; i < this.props.numStars; i++) {
+        let   stars = {};
+        const pp = this.props;
+        const selectedStar = parseInt(pp.selectedStar);
+        const isCustomTitles = pp.titlesCustomText.length > 0;
+        
+        for (let i = 0; i < parseInt(pp.numStars); i++) {
             stars[`star-${i}`] = {
-                isActive: false
+                isActive: false,
+                width: pp.width,
+                backgroundColorEmpty: pp.backgroundColorEmpty,
+                backgroundColorFilled: pp.backgroundColorFilled,
+                borderColorEmpty: pp.borderColorEmpty,
+                borderColorFilled: pp.borderColorFilled,
+                enableTitles: pp.enableTitles,
+                label: (isCustomTitles) ? pp.titlesCustomText[i] : i + 1
             }
         }
-        this.setState({stars});
+        
+        if (!isNaN(selectedStar)) {
+            this.setState({
+                stars,
+                selectedStar: `star-${selectedStar - 1}`
+            }, () => {
+                this.updateStars();
+            });
+        } else {
+            this.setState({stars});
+        }
     }
 
-    onMouseDown = (selectedKey) => {
-        console.log(selectedKey);
+    updateStars = (paramSelectedStar) => {
         const stars = {...this.state.stars};
+        const selectedStar = paramSelectedStar || this.state.selectedStar;
 
         let reached = false;
         Object.keys(stars).map((key) => {
             stars[key].isActive = !reached ? true : false;
 
-            if (key === selectedKey) {
+            if (key === selectedStar) {
                 reached = true;
             }
             return null;
         });
 
-        this.setState({
-            current: selectedKey,
-            stars
-        });
+        this.setState({ stars });
+    }
+
+    onMouseDown = (selectedStar) => {
+        this.setState({ selectedStar });
+        this.updateStars(selectedStar);
     }
 
     render() {
         const stars = this.state.stars;
-        const starProperty = this.props;
 
         return (
             <div className="stars-container">
@@ -53,7 +74,7 @@ class StarEvaluation extends React.Component {
                         return (
                             <Star key={key}
                                 id={key}
-                                star={starProperty}
+                                star={stars[key]}
                                 isActive={stars[key].isActive}
                                 onMouseDown={this.onMouseDown}
                             />
@@ -66,9 +87,9 @@ class StarEvaluation extends React.Component {
 
 StarEvaluation.defaultProps = {
     numStars: 5,
+    selectedStar: null,
 
     width: 22,
-    // height: 250,
 
     backgroundColorEmpty: '#CCC',
     backgroundColorFilled: '#F8D64E',
@@ -76,18 +97,15 @@ StarEvaluation.defaultProps = {
     borderColorEmpty: 'none',
     borderColorFilled: 'none',
 
-    enableTitles: false,
-    titlesType: "number", // if type 'text', user must provide text
-    titlesCustomText: [],
-
-    enableTooltips: false,
-    backgroundColorTooltips: '#f5f5f5',
+    enableTitles: true,
+    titlesCustomText: [], // it will use this Array of labels instead of numbers
 };
 
 StarEvaluation.propTypes = {
     numStars: PropTypes.number,
+    selectedStar: PropTypes.number,
+
     width: PropTypes.number,
-    height: PropTypes.number,
 
     backgroundColorEmpty: PropTypes.string,
     backgroundColorFilled: PropTypes.string,
@@ -96,11 +114,7 @@ StarEvaluation.propTypes = {
     borderColorFilled: PropTypes.string,
 
     enableTitles: PropTypes.bool,
-    titlesType: PropTypes.string,
     titlesCustomText: PropTypes.array,
-
-    enableTooltips: PropTypes.bool,
-    backgroundColorTooltips: PropTypes.string,
 };
 
 export default StarEvaluation;

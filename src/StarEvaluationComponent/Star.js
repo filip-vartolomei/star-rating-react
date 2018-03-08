@@ -20,6 +20,7 @@ class Star extends React.Component {
                     width={star.width}
                     height={star.height}
                     viewBox="0 0 51 48">
+                    { star.enableTitles && <title>{star.label}</title> }
                     <path
                         fill={fillColor}
                         stroke={borderColor}
