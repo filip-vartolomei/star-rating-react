@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import StarEvaluation from './StarEvaluationComponent/StarEvaluation';
+import StarRating from './StarRating/StarRating';
 
 class App extends Component {
   state = {
@@ -12,16 +12,48 @@ class App extends Component {
       width: e.target.value
     });
   }
+  onRatingComplete = (whatRated) => {
+    console.log(whatRated);
+  }
   render() {
     return (
       <div className="App">
-        <input type="number" value={this.state.width} onChange={this.onInputChange} />
-        <br/>
-        <StarEvaluation 
-          width={this.state.width}
-          selectedStar={3}
-          titlesCustomText={['uno', 'due', 'tre', 'quattro', 'cinque']}
-        />
+        <div className="rating">
+          <div className="rating__description">
+            <p>Shippment time</p>
+          </div>
+          <StarRating 
+            width={this.state.width}
+            name={'stocazzo1'}
+            onRatingComplete={this.onRatingComplete}
+          />
+        </div>
+
+        <div className="rating">
+          <div className="rating__description">
+            <p>Item descritpion</p>
+          </div>
+          <StarRating 
+            width={this.state.width}
+            selectedStar={3}
+            titlesCustomText={['uno', 'due', 'tre', 'quattro', 'cinque']}
+            name={'stocazzo2'}
+            onRatingComplete={this.onRatingComplete}
+          />
+        </div>
+
+        <div className="rating">
+          <div className="rating__description">
+            <p>Comunications</p>
+          </div>
+          <StarRating 
+            width={this.state.width}
+            selectedStar={3}
+            titlesCustomText={['uno', 'due', 'tre', 'quattro', 'cinque']}
+            name={'stocazzo3'}
+            onRatingComplete={this.onRatingComplete}
+          />
+        </div>
 
       </div>
     );

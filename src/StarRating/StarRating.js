@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Star from './Star';
 
-class StarEvaluation extends React.Component {
+class StarRating extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,11 +14,12 @@ class StarEvaluation extends React.Component {
     componentWillMount() {
         let   stars = {};
         const pp = this.props;
-        const selectedStar = parseInt(pp.selectedStar);
+        const selectedStar = parseInt(pp.selectedStar, 10);
         const isCustomTitles = pp.titlesCustomText.length > 0;
         
-        for (let i = 0; i < parseInt(pp.numStars); i++) {
-            stars[`star-${i}`] = {
+        for (let i = 0; i < parseInt(pp.numStars, 10); i++) {
+            stars[`star-${i + 1}`] = {
+                index: i + 1,
                 isActive: false,
                 width: pp.width,
                 backgroundColorEmpty: pp.backgroundColorEmpty,
@@ -33,7 +34,7 @@ class StarEvaluation extends React.Component {
         if (!isNaN(selectedStar)) {
             this.setState({
                 stars,
-                selectedStar: `star-${selectedStar - 1}`
+                selectedStar: `star-${selectedStar}`
             }, () => {
                 this.updateStars();
             });
@@ -62,20 +63,24 @@ class StarEvaluation extends React.Component {
     onMouseDown = (selectedStar) => {
         this.setState({ selectedStar });
         this.updateStars(selectedStar);
+        const rate = this.state.stars[selectedStar].index;
+        this.props.onRatingComplete({
+            rate,
+            name: this.props.name
+        });
     }
 
     render() {
         const stars = this.state.stars;
 
         return (
-            <div className="stars-container">
+            <div className="stars-container" style={{display: 'inline-block'}}>
                 {Object.keys(stars)
                        .map((key) => {
                         return (
                             <Star key={key}
                                 id={key}
                                 star={stars[key]}
-                                isActive={stars[key].isActive}
                                 onMouseDown={this.onMouseDown}
                             />
                         );
@@ -85,7 +90,7 @@ class StarEvaluation extends React.Component {
     }
 }
 
-StarEvaluation.defaultProps = {
+StarRating.defaultProps = {
     numStars: 5,
     selectedStar: null,
 
@@ -101,9 +106,12 @@ StarEvaluation.defaultProps = {
     titlesCustomText: [], // it will use this Array of labels instead of numbers
 };
 
-StarEvaluation.propTypes = {
+StarRating.propTypes = {
     numStars: PropTypes.number,
     selectedStar: PropTypes.number,
+
+    name: PropTypes.string.isRequired,
+    onRatingComplete: PropTypes.func.isRequired,
 
     width: PropTypes.number,
 
@@ -117,4 +125,4 @@ StarEvaluation.propTypes = {
     titlesCustomText: PropTypes.array,
 };
 
-export default StarEvaluation;
+export default StarRating;

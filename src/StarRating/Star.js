@@ -1,19 +1,17 @@
 import React from 'react';
-import './Star.css';
 
 class Star extends React.Component {
     render() {
         const {
             id,
-            star,
-            isActive
+            star
         } = this.props;
         
-        const fillColor = isActive ? star.backgroundColorFilled : star.backgroundColorEmpty;
-        const borderColor = isActive ? star.borderColorFilled : star.borderColorEmpty;
+        const fillColor = star.isActive ? star.backgroundColorFilled : star.backgroundColorEmpty;
+        const borderColor = star.isActive ? star.borderColorFilled : star.borderColorEmpty;
 
         return (
-            <div className='star'
+            <div className='star' style={{display: 'inline-block'}}
                 onMouseDown={(e) => this.props.onMouseDown(id, e)}>
 
                 <svg xmlns="http://www.w3.org/2000/svg"

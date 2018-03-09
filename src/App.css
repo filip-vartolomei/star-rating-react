@@ -26,3 +26,18 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+
+.App {
+  max-width: 300px;
+  margin: 0 auto;
+}
+.rating {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rating__description {
+  margin-right: 15px;
+}
