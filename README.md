@@ -23,7 +23,7 @@ class App extends Component {
     // }
   }
   render() {
-    // Star rating have must take 2 props:
+    // Star rating must have take 2 props:
     // - name (string)
     // - onRatingComplete (callback function when user cliks the star)
 
