@@ -39,6 +39,8 @@ class App extends Component {
               /> 
             </div>
           in React</h1>
+          <br/>
+          The repository for the components is on <a href="https://github.com/filip-vartolomei/star-rating-react">Github</a>
         </header>
 
         <h1 className="title__page">Items Bought Feedback</h1>
