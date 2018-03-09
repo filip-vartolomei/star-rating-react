@@ -1,7 +1,14 @@
 ## React Rating Component
 
-This project is a playground for learning **React**.
-To use this **Component** you should include StarRating folder inside your project, you will find it in `src/StarRating/` To use this Component follow instructions below:
+[Demo](https://filip-vartolomei.github.io/star-rating-react/)
+
+This project is a playground when I was learning **React**.
+To use this **Component** you should include `StarRating` folder inside your project, the folder sit in `src/StarRating/`.
+
+![star-rating-component-preview](https://github.com/filip-vartolomei/star-rating-react/blob/master/star-rating-comonent-preview.png)
+
+
+To use this Component follow instructions below:
 
 ### `App.js`
 
@@ -16,16 +23,21 @@ class App extends Component {
   }
 
   onRatingComplete(rate) {
-    // will recive an object:
-    // {
-    //    rate: 1-5 
-    //    name: 'name provided'
-    // }
+    /**
+     * Will recive an object:
+     * {
+     *   rate: 1 to 5 
+     *   name: 'name provided'
+     * }
+    */
   }
   render() {
-    // Star rating must have take 2 props:
-    // - name (string)
-    // - onRatingComplete (callback function when user cliks the star)
+    /**
+     * Star rating must have take 2 props:
+     * - name [string]
+     * - onRatingComplete [function] so you know the rate and the component group
+    */
+    
 
     <StarRating
       name={'description'}
@@ -39,18 +51,18 @@ class App extends Component {
 
 ```js
 
-  numStars: // If you preffer use more that 5 stars
-  selectedStar: // Will initialize component with the selected star [number],
+  numStars: // [number] If you prefer to use more that 5 stars
+  selectedStar: // [number] Will initialize component with the selected star
 
-  width: // Custom width
+  width: // [number] Custom width
 
-  backgroundColorEmpty: // Background color when Star is not yet Selected
-  backgroundColorFilled: // Background color when Star is Selected
+  backgroundColorEmpty: // [string] Background color when Star is not yet Selected
+  backgroundColorFilled: // [string] Background color when Star is Selected
 
-  borderColorEmpty: // Border color when Star is not yet Selected
-  borderColorFilled: // Border color when Star is Selected
+  borderColorEmpty: // [string] Border color when Star is not yet Selected
+  borderColorFilled: // [string] Border color when Star is Selected
 
-  enableTitles: // On hover default browser title description
-  titlesCustomText: // by default stars labels are from 1-5, for custom ones, provide an array like: ['one', 'two'.....]
+  enableTitles: // [boolean] On hover default browser title description
+  titlesCustomText: // [array] by default stars labels are from 1-5, for custom ones, provide an array like: ['one', 'two'.....]
 
 ```
