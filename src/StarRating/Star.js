@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-class Star extends React.Component {
+class Star extends Component {
     render() {
         const {
             id,

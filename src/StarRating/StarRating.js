@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Star from './Star';
 
-class StarRating extends React.Component {
+class StarRating extends Component {
     constructor(props) {
         super(props);
         this.state = {
             stars: {},
             selectedStar: null
         }
+
+        this.updateStars = this.updateStars.bind(this);
+        this.onMouseDown = this.onMouseDown.bind(this);
     }
     
     componentWillMount() {
@@ -43,7 +46,7 @@ class StarRating extends React.Component {
         }
     }
 
-    updateStars = (paramSelectedStar) => {
+    updateStars(paramSelectedStar) {
         const stars = {...this.state.stars};
         const selectedStar = paramSelectedStar || this.state.selectedStar;
 
@@ -60,7 +63,7 @@ class StarRating extends React.Component {
         this.setState({ stars });
     }
 
-    onMouseDown = (selectedStar) => {
+    onMouseDown(selectedStar) {
         this.setState({ selectedStar });
         this.updateStars(selectedStar);
         const rate = this.state.stars[selectedStar].index;

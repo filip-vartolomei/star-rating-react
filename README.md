@@ -33,7 +33,7 @@ class App extends Component {
   }
   render() {
     /**
-     * Star rating must have take 2 props:
+     * Star rating must take 2 props:
      * - name [string]
      * - onRatingComplete [function] so you know the rate and the component group
     */
