@@ -7,7 +7,7 @@ To use this **Component** you should include StarRating folder inside your proje
 
 ```js
 import React, { Component } from 'react';
-import StarRating from './StarRating/StarRating'; // Tell Webpack that Button.js uses these styles
+import StarRating from './StarRating/StarRating';
 
 class App extends Component {
   constrctor() {
